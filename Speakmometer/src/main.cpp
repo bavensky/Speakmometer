@@ -24,7 +24,11 @@ DeviceAddress Thermometer;
 
 TMRpcm tmrpcm;
 
-int t;
+int i_temp = 0;
+float f_temp = 0.0;
+float temp = 0.0;
+float point = 0;
+
 String lang;
 String m_str;
 
@@ -45,37 +49,46 @@ void setup()
     sensors.setResolution(Thermometer, 9);
 
     tmrpcm.speakerPin = 9;
-    tmrpcm.setVolume(6);
-    tmrpcm.quality(1);
-    // tmrpcm.play("temp.wav", 2);
-    // delay(5000);
-    // tmrpcm.play("tell1.wav", 3);
-    // delay(5000);
-    // tmrpcm.play("tell2.wav", 3);
-    // delay(5000);
-    // tmrpcm.play("tell3.wav", 3);
-    // delay(5000);
+    tmrpcm.setVolume(3);
 }
 
 void loop()
 {
     sensors.requestTemperatures();
-    t = sensors.getTempCByIndex(0);
+    temp = sensors.getTempCByIndex(0);
     Serial.print("Temp = ");
-    Serial.println(t);
+    Serial.println(temp);
+
+    i_temp = temp;
+    f_temp = temp - i_temp;
+    f_temp = f_temp * 10;
+
+    Serial.print("temp Int = ");
+    Serial.print(i_temp);
+    Serial.print("  temp float = ");
+    Serial.println(f_temp);
 
     tmrpcm.quality(1);
-    m_str = "" + String(t) + ".wav";
-    char *m_play = &m_str[0u];
-
     tmrpcm.play("tell1.wav");
     delay(3000);
-    tmrpcm.play(m_play);
+
+    m_str = "" + String(i_temp) + ".wav";
+    char *m_play1 = &m_str[0u];
+    tmrpcm.play(m_play1);
     delay(2000);
+
+    tmrpcm.play("point.wav");
+    delay(2000);
+
+    int mmm = f_temp;
+    m_str = "" + String(mmm) + ".wav";
+    char *m_play2 = &m_str[0u];
+    tmrpcm.play(m_play2);
+
     tmrpcm.play("celsius.wav");
     delay(3000);
 
-    Serial.print("m_play = ");
-    Serial.println(m_play);
+
+    tmrpcm.disable();
     delay(5000);
 }
