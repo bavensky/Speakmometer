@@ -30,7 +30,8 @@ float temp = 0.0;
 float point = 0;
 
 String lang;
-String m_str;
+String m_str1;
+String m_str2;
 
 void setup()
 {
@@ -49,7 +50,7 @@ void setup()
     sensors.setResolution(Thermometer, 9);
 
     tmrpcm.speakerPin = 9;
-    tmrpcm.setVolume(3);
+    tmrpcm.setVolume(5);
 }
 
 void loop()
@@ -69,25 +70,28 @@ void loop()
     Serial.println(f_temp);
 
     tmrpcm.quality(1);
+
     tmrpcm.play("tell1.wav");
     delay(3000);
 
-    m_str = "" + String(i_temp) + ".wav";
-    char *m_play1 = &m_str[0u];
+    m_str1 = "" + String(i_temp) + ".wav";
+    char *m_play1 = &m_str1[0u];
     tmrpcm.play(m_play1);
     delay(2000);
 
     tmrpcm.play("point.wav");
     delay(2000);
 
+    f_temp = 5.0;
     int mmm = f_temp;
-    m_str = "" + String(mmm) + ".wav";
-    char *m_play2 = &m_str[0u];
+    Serial.println(mmm);
+    m_str2 = "" + String(mmm) + ".wav";
+    char *m_play2 = &m_str2[0u];
     tmrpcm.play(m_play2);
+    delay(2000);
 
     tmrpcm.play("celsius.wav");
     delay(3000);
-
 
     tmrpcm.disable();
     delay(5000);
