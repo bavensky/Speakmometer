@@ -52,7 +52,8 @@ void setup()
     lcd.setCursor(0, 0);
     lcd.print("Thermo  ");
     lcd.setCursor(0, 1);
-    lcd.print("   Meter");
+    lcd.print("    Talk");
+    delay(3000);
 
     if (!SD.begin(SD_ChipSelectPin))
     {
@@ -79,8 +80,9 @@ void loop()
     lcd.setCursor(0, 0);
     lcd.print("Temp : ");
     lcd.setCursor(0, 1);
+    lcd.print(" ");
     lcd.print(temp);
-    lcd.print(" C  ");
+    lcd.print("C  ");
 
     Serial.print("Temp = ");
     Serial.println(temp);
@@ -88,11 +90,6 @@ void loop()
     i_temp = temp;
     f_temp = temp - i_temp;
     f_temp = f_temp * 10;
-
-    Serial.print("temp Int = ");
-    Serial.print(i_temp);
-    Serial.print("  temp float = ");
-    Serial.println(f_temp);
 
     tmrpcm.quality(1);
 
@@ -123,20 +120,30 @@ void loop()
     // case3 7s
     // case4 9s
     // case5 9s
-    if (temp < 37.5)
+    if (temp >= 30.0 && temp <= 35.5)
     {
         tmrpcm.play("case1.wav");
         delay(6000);
     }
-    else if (temp >= 37.5 && temp <= 38.5)
+    else if (temp >= 36.0 && temp <= 38.5)
     {
         tmrpcm.play("case2.wav");
         delay(7000);
     }
-    else if (temp >= 37.5 && temp <= 38.5)
+    else if (temp >= 38.6 && temp <= 39.5)
     {
-        tmrpcm.play("case2.wav");
-        delay(7000);
+        tmrpcm.play("case3.wav");
+        delay(8000);
+    }
+    else if (temp >= 39.6 && temp <= 40.5)
+    {
+        tmrpcm.play("case4.wav");
+        delay(10000);
+    }
+    else if (temp >= 40.6)
+    {
+        tmrpcm.play("case5.wav");
+        delay(10000);
     }
 
     tmrpcm.disable();
