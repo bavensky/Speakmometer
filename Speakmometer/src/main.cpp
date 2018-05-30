@@ -84,9 +84,6 @@ void loop()
     lcd.print(temp);
     lcd.print("C  ");
 
-    Serial.print("Temp = ");
-    Serial.println(temp);
-
     i_temp = temp;
     f_temp = temp - i_temp;
     f_temp = f_temp * 10;
@@ -99,8 +96,6 @@ void loop()
     delay(2000);
 
     int mmm = f_temp;
-    Serial.println(mmm);
-
     if (mmm != 0)
     {
         tmrpcm.play("point.wav");
@@ -115,11 +110,6 @@ void loop()
     tmrpcm.play("celsius.wav");
     delay(3000);
 
-    // case1 5s
-    // case2 6s
-    // case3 7s
-    // case4 9s
-    // case5 9s
     if (temp >= 30.0 && temp <= 35.5)
     {
         tmrpcm.play("case1.wav");
